@@ -1,7 +1,7 @@
 """Main script, uses other modules to generate sentences."""
 from flask import Flask
-from Code.histogram import create_histogram_dict
-from Code.sample import weighted_word
+from histogram import create_histogram_dict
+from sample import weighted_word
 
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ app = Flask(__name__)
 def before_first_request():
     """Runs only once at Flask startup"""
     # TODO: Initialize your histogram, hash table, or markov chain here.
-    return create_histogram_dict('/Users/maliabarker/Desktop/main/MakeSchool/Term3/ARCHIVE-CS-2-Tweet-Generator/example_txt/example1.txt')
+    return create_histogram_dict('example_txt/example1.txt')
 
 
 @app.route("/")
