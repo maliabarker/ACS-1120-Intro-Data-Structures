@@ -11,8 +11,8 @@ class Dictogram(dict):
         """Initialize this histogram as a new dict and count given words."""
         super(Dictogram, self).__init__()  # Initialize this as a new dict
         # Add properties to track useful word counts for this histogram
-        self.types = 0  # Count of distinct word types in this histogram
-        self.tokens = 0  # Total count of all word tokens in this histogram
+        self.types = 0  # Total of all keys in histogram
+        self.tokens = 0  # Total count of all values in histogram
         # Count words in given list, if any
         if word_list is not None:
             for word in word_list:
@@ -21,15 +21,33 @@ class Dictogram(dict):
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
         # TODO: Increase word frequency by count
+        if word in self:
+            self[word] += count
+        else:
+            self[word] = count
+            self.types += 1
+        self.tokens += 1
+
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
         # TODO: Retrieve word frequency count
+        frequency = 0
+        if word in self:
+            frequency = self[word]
+        return frequency
 
     def sample(self):
         """Return a word from this histogram, randomly sampled by weighting
         each word's probability of being chosen by its observed frequency."""
         # TODO: Randomly choose a word based on its frequency in this histogram
+        distance = 0
+        dart = random.randint(0, sum(self.values()))
+        for key, value in self.items():
+            word_count = (key, value)[1]
+            distance += word_count
+            if distance >= dart:
+                return (key, value)[0]
 
 
 def print_histogram(word_list):
