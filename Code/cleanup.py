@@ -1,4 +1,3 @@
-import random, sys
 from string import punctuation
 
 def read_file(file):
