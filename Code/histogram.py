@@ -25,11 +25,9 @@ def find_unique_words_dict(histogram):
     return unique_words_int
 
 def find_word_frequency_dict(word, histogram):
-    frequency = 0
-    for key in histogram:
-        if key == word:
-            frequency = histogram[key]
-    return frequency
+    if word in histogram.keys():
+        return histogram[word]
+    return 0
 
 # –––––––––––––––––––––––––––––––––TUPLE––––––––––––––––––––––––––––––––––––––––––––
 def create_histogram_tuple(file):
@@ -59,15 +57,12 @@ def find_word_frequency_tuple(word, histogram):
             frequency = tuple[1]
     return frequency
 
-
-
-
 if __name__ == "__main__":
     example_histogram = create_histogram_dict('example_txt/example.txt')
     print(example_histogram)
     
-    # print(find_unique_words_dict(example_histogram))
-    # print(find_word_frequency_dict('sherlock', example_histogram))
+    print(find_unique_words_dict(example_histogram))
+    # print(find_word_frequency_dict('pasta', example_histogram))
 
     # example_2_histogram = create_histogram_tuple('example.txt')
     # print(example_2_histogram)

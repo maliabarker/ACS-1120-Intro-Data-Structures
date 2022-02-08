@@ -1,4 +1,4 @@
-import sys, random, string
+import sys, random
 from histogram import create_histogram_dict
 
 def random_word(histogram_list):
@@ -19,17 +19,11 @@ def weighted_word(histogram):
     distance = 0
     dart = random.randint(0, sum(histogram.values()))
     for key, value in histogram.items():
-        word_count = (key, value)[1]
-        distance += word_count
+        distance += value
         if distance >= dart:
-            return (key, value)[0]
+            return key
 
 if __name__ == '__main__':
     file = sys.argv[1]
     histogram = create_histogram_dict(file)
-    # iterable = histogram.items()
-    # list = list(iterable)
-    # print(list)
-    # print(random_word(list))
-    # print(random_word_weighted(histogram))
     print(weighted_word(histogram))
