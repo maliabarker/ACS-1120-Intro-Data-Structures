@@ -54,6 +54,12 @@ class LinkedList:
         """Return the length of this linked list by traversing its nodes.
         TODO: Running time: O(n) Why and under what conditions?"""
         # TODO: Loop through all nodes and count one for each
+        count = 0
+        node = self.head
+        while node != None:
+            count += 1
+            node = node.next
+        return count
 
 
     def append(self, item):
@@ -62,6 +68,12 @@ class LinkedList:
         # TODO: Create new node to hold given item
         # TODO: If self.is_empty() == True set the head and the tail to the new node
         # TODO: Else append node after tail
+        node = Node(item)
+        if self.is_empty() == True:
+            self.head = node
+        else:
+            self.tail.next = node
+        self.tail = node
 
 
     def prepend(self, item):
@@ -69,12 +81,24 @@ class LinkedList:
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Create new node to hold given item
         # TODO: Prepend node before head, if it exists
+        node = Node(item)
+        if self.is_empty():
+            self.tail = node
+        else:
+            node.next = self.head
+            
+        self.head = node
 
     def find(self, item):
         """Return an item from this linked list if it is present.
         TODO: Best case running time: O(???) Why and under what conditions?
         TODO: Worst case running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes to find item, if present return True otherwise False
+        for node in self.items():
+            if item == node:
+                return True
+        return False
+
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
@@ -84,6 +108,46 @@ class LinkedList:
         # TODO: Update previous node to skip around node with matching data
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
+        
+        # declaring start for loop
+        node = self.head
+        # declaring variables for previous node and if found
+        previous = None
+        found = False
+        # looping through nodes, starting with head node
+        while node != None:
+            # print(f'current node {node}')
+            # print(f'previous node {previous}')
+            if node.data == item:
+                # set found to true so no assertion error
+                found = True
+
+                # if this is head node then replace head node with next node
+                if node == self.head:
+                    # if there is no following nodes aka only node in list, delete it all!
+                    if node.next == None:
+                        self.head = None
+                        self.tail = None
+                    else:
+                        self.head = node.next
+                # if this is tail node replace tail with previous node and make next node
+                # aka node after previous none
+                elif node == self.tail:
+                    previous.next = None
+                    self.tail = previous
+                # if this is node sandwiched between two other nodes
+                else:
+                    previous.next = node.next
+                    # previous = None
+                    
+            # assign previous node as this node before moving on
+            previous = node
+            # assign current node to next node in orde to move on
+            node = node.next
+
+        if found == False:
+            raise ValueError('Item not found: {}'.format(item))
+
 
 if __name__ == "__main__":
     my_ll = LinkedList(["A", "B", "C"])

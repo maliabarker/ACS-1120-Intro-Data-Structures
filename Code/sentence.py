@@ -15,6 +15,7 @@ import random
     # For all other words assign count (0)
 # Generate random float number between 0 and 1
 
+# 280 character limit
 
 words_list = read_file('example_txt/example1.txt')
 # print(words_list)
