@@ -5,26 +5,32 @@ class MarkovChain(object):
     """  """
     def __init__(self, word_list):
         super(MarkovChain, self).__init__()
-
         self.corpus = word_list
         self.markov_dict = {}
+
     
     def markov_chain(self, order):
-        ## This is where we make markov chain dict
-        ## For i in corpus, create new histogram with i as key and...
-        ## new histogram for value with i + 1 as key and count as value
-        for index in range(0, len(self.corpus)):
+        for index in range(0, len(self.corpus) - order + 1):
             # assign variables and check if next_word equals none
             word = self.corpus[index]
-            if index + 1 in range(0, len(self.corpus)):
-                next_word = self.corpus[index + 1]
+            words = []
+            for i in range(0, order):
+                if index+i in range(0, len(self.corpus)):
+                    words.append(self.corpus[index+i])
+                else:
+                    i = 0
+                    words.append(self.corpus[index+i])
+            word_tuple = tuple(words)
+            
+            if index + 1 in range(0, len(self.corpus) - order):
+                next_word = self.corpus[index + order]
             else:
-                next_word = None
+                next_word = self.corpus[0]
 
             # check if word is already in markov dictionary
-            if word in self.markov_dict.keys():
+            if word_tuple in self.markov_dict.keys():
                 # if it is, access dictogram and add next word (will add new key-value pair or increment count)
-                dictogram = self.markov_dict[word]
+                dictogram = self.markov_dict[word_tuple]
                 # check if the next word already in dictogram
                 if next_word:
                     if next_word in dictogram.keys():
@@ -36,8 +42,26 @@ class MarkovChain(object):
             else:
                 # else create new key value pair with new initalized dictogram
                 if next_word:
-                    self.markov_dict[word] = Dictogram([next_word])
-        print(self.markov_dict)
+                    self.markov_dict[word_tuple] = Dictogram([next_word])
+        return self.markov_dict
+    
+    def walk_chain(self, starting_word, word_count):
+        # start with matching key in markov chain as condition
+        count = 0
+        str = []
+        current = starting_word
+        while count in range(0, word_count):
+            i = [item for item in self.markov_dict.keys() if current in item]
+            # print(self.markov_dict.keys())
+            # print(i[0])
+            # print(self.markov_dict[i[0]])
+            # if current_word in self.markov_dict.keys():
+                # print('word found')
+            str.append(current)
+            current = self.markov_dict[i[0]].sample()
+            count += 1
+        return str
+
 
 # create markov chain class (or use functions)
 # start with dictionary that represents markov chain
@@ -59,5 +83,7 @@ class MarkovChain(object):
 
 
 if __name__ == '__main__':
-    test = MarkovChain(read_file('example_txt/example.txt'))
-    print(test.markov_chain(1))
+    test = MarkovChain(read_file('example_txt/sherlock-holmes.txt'))
+    test.markov_chain(2)
+    print('___________')
+    print(test.walk_chain('earth', 20))
