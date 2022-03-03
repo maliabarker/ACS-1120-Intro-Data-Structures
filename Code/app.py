@@ -14,6 +14,7 @@ def before_first_request():
     markov_chain = MarkovChain(word_list, 15)
     return markov_chain
 
+
 @app.route("/")
 def home():
     """Route that returns a web page containing the generated text."""
