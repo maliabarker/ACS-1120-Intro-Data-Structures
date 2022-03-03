@@ -1,4 +1,5 @@
 from string import punctuation
+import re
 from tokens import tokenize
 
 def read_file(file):
@@ -6,7 +7,9 @@ def read_file(file):
         text = f.read()
         punct = punctuation + '”“‘’–…'
         mod_str = ' '.join(filter(None, (word.strip(punct) for word in text.split())))
-        str_list = mod_str.lower().split()
+        lower_str = mod_str.lower()
+        recapitalized_str = re.sub('i\s', ' I ', lower_str)
+        str_list = recapitalized_str.split()
     return str_list
 
 def clean_up(file):
@@ -16,4 +19,4 @@ def clean_up(file):
     return tokens
 
 if __name__ == '__main__':
-    print(clean_up('example_txt/example.txt'))
+    print(read_file('example_txt/example.txt'))

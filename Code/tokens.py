@@ -14,7 +14,7 @@ def split_on_whitespace(text):
     return split_txt
 
 def remove_punctuation(text):
-    no_punc_text = re.sub('[,.()?!]', '', text)
+    no_punc_text = re.sub('[,.()?!-]', '', text)
     no_punc_text = re.sub('--', ' ', no_punc_text)
     no_punc_text = re.sub('[”“‘’–…"]', '', no_punc_text)
     no_punc_text = re.sub('\[[0-9]\]', '', no_punc_text)

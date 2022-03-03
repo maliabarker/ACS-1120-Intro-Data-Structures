@@ -2,6 +2,8 @@ from cleanup import read_file, clean_up
 from dictogram import Dictogram
 import random
 
+# Store markov chain as json
+
 class MarkovChain(object):
     def __init__(self, word_list, order):
         super(MarkovChain, self).__init__()
@@ -66,11 +68,12 @@ class MarkovChain(object):
                     self.dict[word_tuple] = Dictogram([next_word])
         return self.dict
     
-    def walk_chain(self, starting_word, word_count):
+    def walk_chain(self, word_count):
         # start with matching key in markov chain as condition
         count = 0
         str = []
-        current = starting_word
+        current = random.choice(self.corpus)
+        print(current)
         while count in range(0, word_count):
             # i = [item for item in self.markov_dict.keys() if current == item[0]]
             tuples = []
@@ -111,10 +114,10 @@ class MarkovChain(object):
 
 
 if __name__ == '__main__':
-    test = MarkovChain(clean_up('example_txt/flat_earth.txt'), 6)
+    test = MarkovChain(read_file('example_txt/flat_earth.txt'), 10)
     # print(tokenize('example_txt/flat_earth.txt'))
     # print(test.markov_chain(4))
     # test.markov_chain(3)
     # print('___________')
     # print(len(test.markov_chain(3)))
-    print(test.walk_chain('you', 50))
+    print(test.walk_chain(25))
