@@ -1,4 +1,5 @@
 from string import punctuation
+from tokens import tokenize
 
 def read_file(file):
     with open(file) as f:
@@ -8,5 +9,11 @@ def read_file(file):
         str_list = mod_str.lower().split()
     return str_list
 
+def clean_up(file):
+    with open(file) as f:
+        text = f.read()
+        tokens = tokenize(text)
+    return tokens
+
 if __name__ == '__main__':
-    print(read_file('example_txt/example.txt'))
+    print(clean_up('example_txt/example.txt'))

@@ -1,4 +1,4 @@
-from cleanup import read_file
+from cleanup import read_file, clean_up
 from dictogram import Dictogram
 import random
 
@@ -111,7 +111,8 @@ class MarkovChain(object):
 
 
 if __name__ == '__main__':
-    test = MarkovChain(read_file('example_txt/flat_earth.txt'), 5)
+    test = MarkovChain(clean_up('example_txt/flat_earth.txt'), 6)
+    # print(tokenize('example_txt/flat_earth.txt'))
     # print(test.markov_chain(4))
     # test.markov_chain(3)
     # print('___________')
