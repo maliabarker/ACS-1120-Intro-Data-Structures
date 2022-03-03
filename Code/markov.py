@@ -68,13 +68,13 @@ class MarkovChain(object):
                     self.dict[word_tuple] = Dictogram([next_word])
         return self.dict
     
-    def walk_chain(self, word_count):
+    def walk_chain(self):
         # start with matching key in markov chain as condition
-        count = 0
+        characters = 0
         str = []
         current = random.choice(self.corpus)
-        print(current)
-        while count in range(0, word_count):
+        # print(current)
+        while characters in range(0, 280):
             # i = [item for item in self.markov_dict.keys() if current == item[0]]
             tuples = []
             for i in self.markov_dict.keys():
@@ -89,8 +89,16 @@ class MarkovChain(object):
             # print(f'i used is :{random_tuple}')
             for n in random_tuple:
                 # print(f'now being appended: {n}')
+                for i in n:
+                    characters += 1
+                    if characters in range(0, 280):
+                        continue
+                    else:
+                        return str
                 str.append(n)
-                count += 1
+                # increment count to include whitespace
+                characters += 1
+                # count += 1
             # print(f'possible options: {self.markov_dict[random_tuple]}')
             current = self.markov_dict[random_tuple].sample()
             # print(f'sampled word that is now being used: {current}')
@@ -120,4 +128,4 @@ if __name__ == '__main__':
     # test.markov_chain(3)
     # print('___________')
     # print(len(test.markov_chain(3)))
-    print(test.walk_chain(25))
+    print(test.walk_chain())

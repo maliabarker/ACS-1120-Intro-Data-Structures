@@ -4,15 +4,24 @@
 
 {% block content %}
     <div class="container">
+        {% for flash_message in get_flashed_messages() %}
+            <div class="alert alert-info mt-4" role="alert">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
         <h2 class="mt-3">The Mark Sargent Tweet Generator</h2>
         <div class="row">
             <div class="col-md-6">
                 <img class="img-fluid" src="{{url_for('static', filename='images/ms.png')}}">
             </div>
             <div class="col-md-6 mt-4">
-                <p class="pt-4 text-center">{{ message }}</p>
+                <blockquote class="pt-4 text-center">{{ message }}</blockquote>
+
                 <div class="d-flex justify-content-center mt-4">
-                    <button class="btn btn-primary mr-4">Tweet It!</button>
+                    <form action="/tweet" method="post">
+                        <input type="hidden" name="sentence" value="{{ message }}">
+                        <button class="btn btn-primary mr-4" type="submit">Tweet It!</button>
+                    </form>
                     <button class="btn btn-primary ml-4">New Tweet</button>
                 </div>
             </div>
