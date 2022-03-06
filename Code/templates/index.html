@@ -22,7 +22,9 @@
                         <input type="hidden" name="sentence" value="{{ message }}">
                         <button class="btn btn-primary mr-4" type="submit">Tweet It!</button>
                     </form>
-                    <button class="btn btn-primary ml-4">New Tweet</button>
+                    <a href="{{ url_for('home') }}"><button class="btn btn-primary ml-4">New Tweet</button></a>
+                    <!-- <button class="btn btn-primary ml-4">New Tweet</button> -->
+                    
                 </div>
             </div>
         </div>
